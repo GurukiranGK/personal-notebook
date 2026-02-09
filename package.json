@@ -1,0 +1,13 @@
+{
+  "name": "rag-system",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "@langchain/textsplitters": "^1.0.1",
+    "langchain": "^1.1.18"
+  }
+}

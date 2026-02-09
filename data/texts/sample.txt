@@ -1,0 +1,31 @@
+Introduction to Retrieval-Augmented Generation
+
+Retrieval-Augmented Generation, commonly known as RAG, is a technique used to enhance the responses of large language models by grounding them in external knowledge sources. Instead of relying solely on what the model learned during training, RAG systems retrieve relevant information from documents and use that information to generate more accurate and context-aware answers.
+
+Why RAG is Important
+
+Large language models are powerful, but they have limitations. They may hallucinate information, provide outdated answers, or lack domain-specific knowledge. RAG addresses these issues by allowing the model to reference real documents at query time. This makes RAG especially useful in enterprise applications, legal systems, healthcare, and internal knowledge bases.
+
+Core Components of a RAG System
+
+A typical RAG system consists of several core components. First, documents are ingested and converted into plain text. These documents can be PDFs, Word files, Markdown files, or simple text files. Once the text is extracted, it is split into smaller chunks. Chunking is important because embeddings work best on smaller, focused pieces of text.
+
+Embedding and Vector Storage
+
+After chunking, each text chunk is converted into a numerical vector using an embedding model. These vectors capture the semantic meaning of the text. The vectors are then stored in a vector database such as Chroma, Pinecone, or Weaviate. This allows the system to efficiently search for relevant chunks when a user asks a question.
+
+Retrieval Process
+
+When a user submits a query, the query itself is embedded using the same embedding model. The system then performs a similarity search in the vector database to find the most relevant chunks. These chunks are selected based on how close their embeddings are to the query embedding.
+
+Answer Generation
+
+Once relevant chunks are retrieved, they are passed to a language model along with the user’s question. The model is instructed to answer the question using only the provided context. This grounding step is critical for reducing hallucinations and improving answer reliability.
+
+Chunking Strategy Considerations
+
+Chunk size and overlap play a crucial role in RAG performance. If chunks are too large, embeddings may lose focus. If chunks are too small, important context may be lost. Overlap helps preserve context across chunk boundaries, ensuring that related ideas are not separated entirely.
+
+Conclusion
+
+Retrieval-Augmented Generation is a powerful pattern for building reliable and scalable AI systems. By combining information retrieval with language generation, RAG enables applications that are both intelligent and trustworthy. Understanding the fundamentals of document ingestion, chunking, embedding, and retrieval is essential for building an effective RAG pipeline.
