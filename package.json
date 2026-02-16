@@ -7,7 +7,12 @@
     "dev": "nodemon src/index.js"
   },
   "dependencies": {
-    "@langchain/textsplitters": "^1.0.1",
-    "langchain": "^1.1.18"
+    "@google/genai": "^1.41.0",
+    "@langchain/community": "^0.3.21",
+    "@langchain/core": "^0.3.58",
+    "@langchain/google-genai": "^0.0.22",
+    "@langchain/textsplitters": "^0.0.3",
+    "chromadb": "^3.3.0",
+    "dotenv": "^16.6.1"
   }
 }
