@@ -6,16 +6,20 @@ const client = new ChromaClient({
   ssl: false,
 });
 
+export async function storeVectors(docs, embeddings) {
+  try {
+    await client.deleteCollection({ name: "rag-day4" });
+  } catch {}
 
-export async function storeVectors(chunks, embeddings) {
   const collection = await client.getOrCreateCollection({
-    name: "rag-day2",
+    name: "rag-day4",
   });
 
   await collection.add({
-    ids: chunks.map((_, i) => `chunk-${i}`),
+    ids: docs.map((_, i) => `chunk-${i}`),
+    documents: docs.map(d => d.pageContent),
+    metadatas: docs.map(d => d.metadata),
     embeddings,
-    documents: chunks,
   });
 
   return collection;

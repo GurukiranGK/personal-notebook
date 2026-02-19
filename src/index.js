@@ -8,6 +8,7 @@ import { generateAnswer } from "./generation/answer.js";
 
 async function main() {
   const question = "Why is RAG important?";
+  const sectionFilter = "importance"; // 👈 metadata filter
 
   // 1️⃣ Load + chunk
   const text = loadText("sample.txt");
@@ -24,7 +25,11 @@ async function main() {
   const [queryEmbedding] = await embedTexts([question]);
 
   // 5️⃣ Retrieve relevant chunks
-  const retrievedChunks = await search(collection, queryEmbedding);
+  const retrievedChunks = await search(
+    collection,
+    queryEmbedding,
+    sectionFilter
+  );
 
   console.log("\nRetrieved Chunks:\n");
   retrievedChunks.forEach((c, i) => {
