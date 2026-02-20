@@ -2,29 +2,29 @@ import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 
 export async function chunkText(text) {
   const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 400,
-    chunkOverlap: 50,
+    chunkSize: 500,
+    chunkOverlap: 100,
   });
 
   const docs = await splitter.createDocuments([text]);
 
-  return docs.map((doc) => {
-    let section = "general";
+  // Attach metadata cleanly
+  return docs.map(doc => ({
+    pageContent: doc.pageContent,
+    metadata: {
+      section: inferSection(doc.pageContent),
+      source: "sample.txt",
+    },
+  }));
+}
 
-    if (doc.pageContent.includes("Why RAG is Important")) {
-      section = "importance";
-    } else if (doc.pageContent.includes("Introduction to Retrieval-Augmented Generation")) {
-      section = "introduction";
-    } else if (doc.pageContent.includes("Core Components")) {
-      section = "components";
-    }
+// Simple heuristic (can be replaced later)
+function inferSection(text) {
+  const lower = text.toLowerCase();
 
-    return {
-      pageContent: doc.pageContent,
-      metadata: {
-        section,
-        source: "rag_doc",
-      },
-    };
-  });
+  if (lower.includes("why rag is important")) return "importance";
+  if (lower.includes("core components")) return "components";
+  if (lower.includes("introduction")) return "introduction";
+
+  return "general";
 }

@@ -1,11 +1,9 @@
-export async function search(collection, queryEmbedding, sectionFilter) {
+export async function search(collection, queryEmbedding, section) {
   const results = await collection.query({
     queryEmbeddings: [queryEmbedding],
     nResults: 3,
-    where: sectionFilter
-      ? { section: sectionFilter }
-      : undefined,
+    where: section ? { section } : undefined,
   });
 
-  return results.documents[0];
+  return results.documents[0] || [];
 }

@@ -8,23 +8,23 @@ import { generateAnswer } from "./generation/answer.js";
 
 async function main() {
   const question = "Why is RAG important?";
-  const sectionFilter = "importance"; // 👈 metadata filter
+  const sectionFilter = "importance";
 
   // 1️⃣ Load + chunk
   const text = loadText("sample.txt");
   const chunks = await chunkText(text);
-  const chunkTexts = chunks.map(c => c.pageContent);
 
   // 2️⃣ Embed chunks
+  const chunkTexts = chunks.map(c => c.pageContent);
   const chunkEmbeddings = await embedTexts(chunkTexts);
 
   // 3️⃣ Store vectors
-  const collection = await storeVectors(chunkTexts, chunkEmbeddings);
+  const collection = await storeVectors(chunks, chunkEmbeddings);
 
   // 4️⃣ Embed query
   const [queryEmbedding] = await embedTexts([question]);
 
-  // 5️⃣ Retrieve relevant chunks
+  // 5️⃣ Retrieve
   const retrievedChunks = await search(
     collection,
     queryEmbedding,
@@ -37,7 +37,7 @@ async function main() {
     console.log(c);
   });
 
-  // 6️⃣ Generate grounded answer
+  // 6️⃣ Generate answer
   const answer = await generateAnswer(question, retrievedChunks);
 
   console.log("\nFinal Answer:\n");

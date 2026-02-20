@@ -7,12 +7,13 @@ const client = new ChromaClient({
 });
 
 export async function storeVectors(docs, embeddings) {
+  // DEV ONLY: clean slate
   try {
-    await client.deleteCollection({ name: "rag-day4" });
+    await client.deleteCollection({ name: "rag-day4-final" });
   } catch {}
 
   const collection = await client.getOrCreateCollection({
-    name: "rag-day4",
+    name: "rag-day4-final",
   });
 
   await collection.add({
